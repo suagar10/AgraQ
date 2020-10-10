@@ -6,7 +6,7 @@ import re
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
-from flask import Flask, redirect, url_for, request, render_template
+from flask import Flask, redirect, url_for, request, jsonify
 from gevent.pywsgi import WSGIServer
 from werkzeug.utils import secure_filename
 
@@ -16,9 +16,6 @@ app = Flask(__name__)
 MODEL_PATH = 'Models/trained_model_mobilenet.h5'
 
 model = tf.keras.models.load_model(MODEL_PATH)
-#model.compile(loss = 'categorical_crossentropy', optimizer= 'adam', metrics= ['accuracy'])
-#model._make_predict_function()          # Necessary
-
 print('Model loaded. Check http://127.0.0.1:5000/')
 
 def model_predict(img_path, model):
@@ -29,22 +26,20 @@ def model_predict(img_path, model):
     x = np.expand_dims(x, axis=0)
 
     categories = ['Apple Scab', 'Apple black rot', 'Cedar apple rust', 'Healthy Apple', 'Healthy Blueberry', 'Cherry healthy', 'Cherry Powdery Mildew', 'Cercospora Leaf Spot'
-             , 'Corn common rust', 'Healthy corn', 'Corn Northern leaf blight', 'Grape black rot', 'Grape Black measles', 'Healthy Grape', 'Grape leaf blight', 'Orange Huanglong bing'
-             , 'Peach bacterial spot', 'Healthy Peach', 'Bell Pepper bacterial spot', 'Bell pepper healthy', 'Potato Early blight', 'Potato healthy blight', 'Potato late blight'
-             , 'Healthy Raspberry', 'Healthy Soyabean', 'Squash powdery mildew', 'Healthy Strawberry', 'Strawberry leaf scotch', 'Tomato bacterial spot', 'Tomato early blight', 'Healthy Tomato'
-             , 'Tomato late blight', 'Tomato leaf mold', 'Tomato septoria leaf spot', 'Tomato two spotted spider mite', 'Tomato target spot', 'Tomato mosiac virus', 'Tomato yellow leaf curl virus']
+                 , 'Corn common rust', 'Healthy corn', 'Corn Northern leaf blight', 'Grape black rot', 'Grape Black measles', 'Healthy Grape', 'Grape leaf blight', 'Orange Huanglong bing'
+                 , 'Peach bacterial spot', 'Healthy Peach', 'Bell Pepper bacterial spot', 'Bell pepper healthy', 'Potato Early blight', 'Potato healthy blight', 'Potato late blight'
+                 , 'Healthy Raspberry', 'Healthy Soyabean', 'Squash powdery mildew', 'Healthy Strawberry', 'Strawberry leaf scotch', 'Tomato bacterial spot', 'Tomato early blight', 'Healthy Tomato'
+                 , 'Tomato late blight', 'Tomato leaf mold', 'Tomato septoria leaf spot', 'Tomato two spotted spider mite', 'Tomato target spot', 'Tomato mosiac virus', 'Tomato yellow leaf curl virus']
 
     preds = model.predict(x)
     result = np.argmax(preds)
     preds = categories[result]
-    print(preds)
     return preds
-
 
 @app.route('/', methods=['GET'])
 def index():
     # Main page
-    return render_template('index.html')
+    return None
 
 
 @app.route('/predict', methods=['GET', 'POST'])
@@ -62,7 +57,7 @@ def upload():
         # Make prediction
         result = model_predict(file_path, model)
 
-        return result
+        return jsonify({'result' : result})
     return None
 
 
