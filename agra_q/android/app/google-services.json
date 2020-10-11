@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "739523516817",
+    "firebase_url": "https://agraq-3e858.firebaseio.com",
+    "project_id": "agraq-3e858",
+    "storage_bucket": "agraq-3e858.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739523516817:android:f70916fad6b3035f296230",
+        "android_client_info": {
+          "package_name": "com.example.agra_q"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739523516817-b7ta6b7b8kk6shsg1kehnrorvdkc6kl6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAt6kI60JzVTIv2grXEpeG9-om4A4FuDXk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739523516817-b7ta6b7b8kk6shsg1kehnrorvdkc6kl6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
